@@ -29,11 +29,11 @@ from BES_Processing_Database.DATA_PART_A d inner join BES_Processing_Database.VI
 
 
 //  The following statement creates the DATA_PART_B table in the Pre E&I database using the one in the Processing database
-//  by extracting only the variables that pertain to the generic modules of the Part B questionnaire and renaming the
-//  variable QID as bus_num
+//  by extracting only the variables that pertain to the generic modules of the Part B questionnaire and assigning more
+//  descriptive names to some variables
 
 create table DATA_PART_B
-select QID as bus_num, HI1, HI3, HI5, HI6, HI8, HI12, BR1, BR2, BR3, BR6, BR4, BR5, BR7, BR8, BE1, BE2, BE3, BE4, BE5, BE6, BE7, BE8, BE9, BE10, BE11, BE12, BE13, BE14, BE15, BE16, SCT1, SCT2, SCT3, SCT4, ICE11A, ICE11B, ICE12A, ICE12B, ICE13A, ICE13B, ICE14A, ICE14B, ICE15A, ICE15B, CE21, CE22, CE23, CE24, CE25, CE26, CE31, CE32, CE33, CE34, CE35, CE36, CE41, CE42, CE43, CE44, CE45, CE46, CE51, CE52, CE53, CE54, CE55, CE56, IND
+select QID as bus_num, HI1 as district, HI3 as cluster, HI5 as ctv, HI6 as ed, HI8 as result_code, HI12 as data_entry_clerk, BR1, BR2, BR3, BR6, BR4, BR5, BR7, BR8, BE1, BE2, BE3, BE4, BE5, BE6, BE7, BE8, BE9, BE10, BE11, BE12, BE13, BE14, BE15, BE16, SCT1, SCT2, SCT3, SCT4, ICE11A, ICE11B, ICE12A, ICE12B, ICE13A, ICE13B, ICE14A, ICE14B, ICE15A, ICE15B, CE21, CE22, CE23, CE24, CE25, CE26, CE31, CE32, CE33, CE34, CE35, CE36, CE41, CE42, CE43, CE44, CE45, CE46, CE51, CE52, CE53, CE54, CE55, CE56, IND
 from BES_Processing_Database.DATA_PART_B;
 
 
