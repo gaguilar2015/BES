@@ -1,0 +1,63 @@
+//  This script selects the businesses that did not provide a new ISIC during the interview but have a 4-digit ISIC code on record
+//  And for each record, determine which range the 4-digit code falls under to assign the appropriate single digit ISIC code
+//  Finally, executes all the updates for each record
+$stmt = $db->prepare("SELECT *
+  	              FROM data_part_a
+  	              WHERE bus_primary_1 = 1 AND primary_isic IS NOT NULL");
+$stmt->execute();
+if($stmt->rowCount()>0){
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $update = "";
+    
+    foreach($result as $row){
+        $bus_num = $row['bus_num'];
+        $isic4 = $row['primary_isic'];
+        $isic = "NULL";
+        
+        if($isic4 < 400){
+            $isic = 1;
+        } else if($isic4 >= 500 && $isic4 < 1000){
+            $isic = 2;
+        } else if($isic4 >= 1000 && $isic4 < 3400){
+            $isic = 3;
+        } else if($isic4 >= 3500 && $isic4 < 4000){
+            $isic = 4;
+        } else if($isic4 >= 4100 && $isic4 < 4400){
+            $isic = 5;
+        } else if($isic4 >= 4500 && $isic4 < 4800){
+            $isic = 6;
+        } else if($isic4 >= 4900 && $isic4 < 5400){
+            $isic = 7;
+        } else if($isic4 >= 5500 && $isic4 < 5700){
+            $isic = 8;
+        } else if($isic4 >= 5800 && $isic4 < 6400){
+            $isic = 9;
+        } else if($isic4 >= 6400 && $isic4 < 6700){
+            $isic = 10;
+        } else if($isic4 >= 6800 && $isic4 < 6900){
+            $isic = 11;
+        } else if($isic4 >= 6900 && $isic4 < 7600){
+            $isic = 12;
+        } else if($isic4 >= 7700 && $isic4 < 8300){
+            $isic = 13;
+        } else if($isic4 >= 8500 && $isic4 < 8600){
+            $isic = 15;
+        } else if($isic4 >= 8600 && $isic4 < 8900){
+            $isic = 16;
+        } else if($isic4 >= 9000 && $isic4 < 9400){
+            $isic = 17;
+        } else if($isic4 >= 9400 && $isic4 < 9700){
+            $isic = 18;
+        } else if($isic4 >= 9700 && $isic4 < 9900){
+            $isic = 19;
+        } else if($isic4 > 9900){
+            $isic = 20;
+        }
+        
+        $update .= "update data_part_a set broad_isic = $isic where bus_num = $bus_num; ";
+    }
+    
+    if($update != ""){
+        $db->exec($update);
+    }
+}
